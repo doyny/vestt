@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Invest with Tom – Login</title>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+</head>
+<body>
+  <h1>Welcome to Invest with Tom</h1>
+  <button id="login">Login / Sign Up</button>
+
+  <script>
+    // Replace these with your values from the Auth0 dashboard
+    const auth0 = await createAuth0Client({
+      domain: 'dev-7v3lajxu2yknl3xj.us.auth0.com',
+      client_id: '9mg7aT8XetnazuIRMS78wcqwEy635Fkt',
+      authorizationParams: {
+        redirect_uri: 'http://localhost:5500/dashboard.html'
+      }
+    });
+
+    document.getElementById('login').addEventListener('click', async () => {
+      await auth0.loginWithRedirect();
+    });
+  </script>
+</body>
+</html>
