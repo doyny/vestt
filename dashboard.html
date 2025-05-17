@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+</head>
+<body>
+  <h1>Dashboard</h1>
+  <p id="user-info"></p>
+  <button id="logout">Logout</button>
+
+  <script>
+    const auth0 = await createAuth0Client({
+      domain: 'dev-7v3lajxu2yknl3xj.us.auth0.com',
+      client_id: '9mg7aT8XetnazuIRMS78wcqwEy635Fkt'
+    });
+
+    // Handle redirect from Auth0
+    if (window.location.search.includes("code=")) {
+      await auth0.handleRedirectCallback();
+      window.history.replaceState({}, document.title, "/dashboard.html");
+    }
+
+    const user = await auth0.getUser();
+    document.getElementById('user-info').textContent = `Hello, ${user.name || user.email}!`;
+
+    document.getElementById('logout').addEventListener('click', () => {
+      auth0.logout({
+        logoutParams: {
+          returnTo: 'http://localhost:5500/index.html'
+        }
+      });
+    });
+  </script>
+</body>
+</html>
